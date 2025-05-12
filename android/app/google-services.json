@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "301066581179",
+    "project_id": "skin-scanning",
+    "storage_bucket": "skin-scanning.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:301066581179:android:2e98d2f997f94afe96a59e",
+        "android_client_info": {
+          "package_name": "com.LeciMangga.skinScanning"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-hsvZf7hRfe-hQkBMhjD9LWFQ48S6E3E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:301066581179:android:7969d62ddc6fb91996a59e",
+        "android_client_info": {
+          "package_name": "com.example.skinscanning"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-hsvZf7hRfe-hQkBMhjD9LWFQ48S6E3E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

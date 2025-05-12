@@ -1,0 +1,1 @@
+export 'package:skinscanning/src/routes/app_pages.dart';
