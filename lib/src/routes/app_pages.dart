@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
+import 'package:skinscanning/src/bindings/base_builder_binding.dart';
 import 'package:skinscanning/src/bindings/index.dart';
-import 'package:skinscanning/src/bindings/landing_binding.dart';
-import 'package:skinscanning/src/page/Landing/landing_controller.dart';
+import 'package:skinscanning/src/bindings/base_builder_binding.dart';
+import 'package:skinscanning/src/page/ScanUrSkin/ScanUrSkin_view.dart';
+import 'package:skinscanning/src/page/Template/base_Builder.dart';
 import 'package:skinscanning/src/startup/startup_view.dart';
 import 'package:skinscanning/src/page/Landing/landing_view.dart';
 import 'package:skinscanning/src/page/Login/login_view.dart';
@@ -15,9 +17,13 @@ abstract class AppPages {
       binding: StartupBinding(),
     ),
     GetPage(
+      name: '/base',
+      page: () => BaseBuilder(),
+      binding: BaseBuilderBinding(),
+    ),
+    GetPage(
       name: '/landing',
       page: () => LandingView(),
-      binding: LandingBinding(),
     ),
     GetPage(
       name: '/login',
@@ -29,5 +35,9 @@ abstract class AppPages {
       page: () => RegisterView(),
       binding: RegisterBinding(),
     ),
+    GetPage(
+      name: '/scanurskin',
+      page: () => ScanurskinView(),
+    )
   ];
 }

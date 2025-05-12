@@ -13,20 +13,19 @@ class _LandingViewState extends State<LandingView> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LandingController>(
-      builder: (controller) => BaseScaffold(
-          body: GestureDetector(
-            onTap: (){controller.onTapGestureDetector(context);},
-            child: SingleChildScrollView(
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              child: Column(
-                children: [
-                  SearchingBar(),
-                  SizedBox(height: Get.height*2,)
-                ],
-              ),
-            ),
+      init: LandingController(),
+      builder: (controller) => GestureDetector(
+        onTap: (){controller.onTapGestureDetector(context);},
+        child: SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          child: Column(
+            children: [
+              SearchingBar(),
+              SizedBox(height: Get.height*2,)
+            ],
           ),
         ),
+      ),
     );
   }
 }

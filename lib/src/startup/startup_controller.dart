@@ -28,7 +28,7 @@ class StartupController extends BaseController with GetSingleTickerProviderState
       final isLoggedIn = refreshedUser != null;
       isLoading = false;
       if (isLoggedIn) {
-        Get.offAllNamed('/landing');
+        Get.offAllNamed('/base');
       } else {
         Get.offAllNamed('/login');
       }
