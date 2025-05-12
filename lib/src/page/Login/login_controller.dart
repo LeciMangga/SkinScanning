@@ -14,7 +14,7 @@ class LoginController extends BaseController with GetSingleTickerProviderStateMi
       if (message == null){
         Get.snackbar('error', '');
       } else if (message.contains('Success')){
-        Get.offAllNamed('/landing');
+        Get.offAllNamed('/base');
       } else {
         Get.snackbar('', message);
       }
@@ -27,7 +27,7 @@ class LoginController extends BaseController with GetSingleTickerProviderStateMi
     if (message == null){
       Get.snackbar('error', '');
     } else if (message.contains('Success')){
-      Get.offAllNamed('/landing');
+      Get.offAllNamed('/base');
     } else {
       Get.snackbar('', message);
     }

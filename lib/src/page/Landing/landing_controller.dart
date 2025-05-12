@@ -1,4 +1,6 @@
 import 'package:skinscanning/src/core/base_import.dart';
+import 'package:skinscanning/src/page/Template/base_Builder_controller.dart';
+import 'package:skinscanning/src/page/ScanUrSkin/ScanUrSkin_view.dart';
 
 class LandingController extends BaseController with GetSingleTickerProviderStateMixin{
   final searchFormKey = GlobalKey<FormState>();
@@ -9,6 +11,12 @@ class LandingController extends BaseController with GetSingleTickerProviderState
 
   void onTapGestureDetector(BuildContext context){
     FocusScope.of(context).unfocus();
+  }
+
+  void goToScanPage() {
+    final controller = Get.find<BaseBuilderController>();
+    controller.selectedIndex.value = 2;
+    controller.builded.value = ScanurskinView();
   }
 
   @override
