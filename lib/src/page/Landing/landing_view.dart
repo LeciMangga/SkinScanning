@@ -1,6 +1,6 @@
 import 'package:skinscanning/src/core/base_import.dart';
 import 'package:skinscanning/src/page/Landing/landing_controller.dart';
-import 'package:skinscanning/src/page/Landing/widget/news_list.dart';
+import 'package:skinscanning/src/page/Landing/widget/landing_news_list.dart';
 import 'package:skinscanning/src/page/Landing/widget/search_bar.dart';
 import 'package:skinscanning/src/page/Landing/widget/scan_your_skin_card.dart';
 import 'package:skinscanning/src/page/Landing/widget/skin_info_list.dart';
@@ -34,7 +34,7 @@ class _LandingViewState extends State<LandingView> {
               ),
               const SizedBox(height: 20),
               const SkinInfoList(),
-              const NewsList(),
+              const LandingNewsList(),
               const SizedBox(height: 60),
             ],
           ),

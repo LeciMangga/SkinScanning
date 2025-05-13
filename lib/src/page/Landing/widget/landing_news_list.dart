@@ -1,12 +1,16 @@
 import 'package:skinscanning/src/core/base_import.dart';
-import 'package:skinscanning/src/page/Landing/widget/news_card.dart';
+import 'package:skinscanning/src/page/Landing/widget/landing_news_card.dart';
 
-class NewsList extends StatelessWidget {
-  const NewsList({super.key});
+class LandingNewsList extends StatelessWidget {
+  final bool isLoading;
+
+  const LandingNewsList({super.key, this.isLoading = false});
 
   @override
   Widget build(BuildContext context) {
-    final newsItems = [
+    final newsItems = isLoading
+        ? List.generate(3, (index) => {})
+        : [
       {
         'image': 'https://images.unsplash.com/photo-1501004318641-b39e6451bec6',
         'title': 'Early Detection of Melanoma Improves Survival by 70%"',
@@ -20,13 +24,6 @@ class NewsList extends StatelessWidget {
         'author': 'Dr. Jane Smith, Dermatologist',
         'tag': 'Acne',
         'time': '5m ago',
-      },
-      {
-        'image': 'https://images.unsplash.com/photo-1501004318641-b39e6451bec6',
-        'title': 'Is Your Skincare Routine Damaging Your Skin?',
-        'author': 'Dr. Emily Green',
-        'tag': 'Skincare',
-        'time': '12m ago',
       },
       {
         'image': 'https://images.unsplash.com/photo-1501004318641-b39e6451bec6',
@@ -52,15 +49,15 @@ class NewsList extends StatelessWidget {
           child: Column(
             children: List.generate(newsItems.length, (index) {
               final item = newsItems[index];
-              return NewsCard(
-                imageUrl: item['image']!,
-                title: item['title']!,
-                author: item['author']!,
-                tag: item['tag']!,
-                time: item['time']!,
+              return LandingNewsCard(
+                imageUrl: item['image'],
+                title: item['title'],
+                author: item['author'],
+                tag: item['tag'],
+                time: item['time'],
+                isLoading: isLoading,
                 onTap: () {
                   Get.snackbar("News", "Opening '${item['title']}'");
-                  // Get.to(() => NewsDetailPage(news: item));
                 },
               );
             }),

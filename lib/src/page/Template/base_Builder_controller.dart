@@ -1,5 +1,6 @@
 import 'package:skinscanning/src/core/base_import.dart';
 import 'package:skinscanning/src/page/Landing/landing_view.dart';
+import 'package:skinscanning/src/page/News/news_view.dart';
 import 'package:skinscanning/src/page/ScanUrSkin/ScanUrSkin_view.dart';
 
 class BaseBuilderController  extends BaseController with GetSingleTickerProviderStateMixin{
@@ -43,7 +44,7 @@ class BaseBuilderController  extends BaseController with GetSingleTickerProvider
         builded.value = ScanurskinView();
         break;
       case 3:
-        builded.value = Placeholder();
+        builded.value = NewsView();
         break;
       case 4:
         builded.value = Placeholder();
