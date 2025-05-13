@@ -6,6 +6,10 @@ class LoginController extends BaseController with GetSingleTickerProviderStateMi
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  void onTapForgotPassword(){
+    Get.toNamed('/forgot');
+  }
+
   void loginwithEmailandPassword() async{
     if(loginFormKey.currentState!.validate()){
       String email = emailController.text.trim();
@@ -22,7 +26,6 @@ class LoginController extends BaseController with GetSingleTickerProviderStateMi
   }
 
   void loginwithGoogle() async{
-    print('login with google');
     String? message = await Auth.to.loginUserGoogle();
     if (message == null){
       Get.snackbar('error', '');
@@ -31,7 +34,6 @@ class LoginController extends BaseController with GetSingleTickerProviderStateMi
     } else {
       Get.snackbar('', message);
     }
-    print(message);
   }
 
   void onTapSignUp() async{

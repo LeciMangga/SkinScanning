@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:skinscanning/src/core/base_import.dart';
 import 'package:skinscanning/src/page/Login/login_controller.dart';
 
@@ -55,6 +56,11 @@ class loginEmailPassword extends StatelessWidget {
                 }
                 return null;
               },
+            ),
+            SizedBox(height: 10,),
+            GestureDetector(
+              onTap: controller.onTapForgotPassword,
+              child: Container(alignment: Alignment.bottomRight,child: Text('Forgot Password?', style: TextStyle(color: Colors.black),textAlign: TextAlign.end,)),
             ),
             SizedBox(height: 30),
             SizedBox(

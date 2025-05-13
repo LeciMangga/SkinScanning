@@ -26,7 +26,7 @@ class _LandingViewState extends State<LandingView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 30),
+              const SizedBox( height: 30),
               const SearchingBar(),
               const SizedBox(height: 20),
               ScanYourSkinCard(

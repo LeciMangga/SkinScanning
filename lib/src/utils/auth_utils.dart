@@ -2,44 +2,48 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:skinscanning/src/core/base_import.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class Auth extends BaseController{
+class Auth extends BaseController {
 
   static Auth get to => Get.find();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   Rxn<User> firebaseUser = Rxn<User>();
 
-  FirebaseAuth GetFireBaseAuth(){
+  FirebaseAuth GetFireBaseAuth() {
     return _auth;
   }
 
   @override
-  void onInit(){
+  void onInit() {
     super.onInit();
     firebaseUser.bindStream(_auth.authStateChanges());
   }
 
-  Future<String?> registerUserEmailPassword(String email,password)async{
-    try{
-      await _auth.createUserWithEmailAndPassword(
+  Future<String?> registerUserEmailPassword(String email, password,
+      displayName) async {
+    try {
+      final credential = await _auth.createUserWithEmailAndPassword(
           email: email,
           password: password
       );
+      User? user = credential.user;
+      await user?.updateDisplayName(displayName);
       return "Success";
-    }on FirebaseAuthException catch (e){
-      if (e.code == 'weak-password'){
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
         return 'The Password provided is too weak';
-      } else if(e.code == 'email-already-in-use'){
+      } else if (e.code == 'email-already-in-use') {
         return 'The account already exists for that email';
       }
-    } catch (e){
+    } catch (e) {
       return e.hashCode.toString();
     }
     return null;
   }
 
-  Future<String?> loginUserEmailPassword(String email,password)async{
-    try{
-      final credential = await _auth.signInWithEmailAndPassword(email: email, password: password);
+  Future<String?> loginUserEmailPassword(String email, password) async {
+    try {
+      final credential = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
       if (credential.user != null) {
         firebaseUser.value = credential.user;
         SettingsUtils.setString('uid', credential.user!.uid);
@@ -50,7 +54,7 @@ class Auth extends BaseController{
       } else {
         return 'Login failed';
       }
-    }on FirebaseAuthException catch(e){
+    } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         return 'No user found for that email.';
       } else if (e.code == 'wrong-password') {
@@ -58,17 +62,18 @@ class Auth extends BaseController{
       } else {
         return e.code.toString();
       }
-    }catch (e){
+    } catch (e) {
       return e.toString();
     }
   }
 
 
-  Future<dynamic> loginUserGoogle()async{
-    try{
+  Future<dynamic> loginUserGoogle() async {
+    try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      final GoogleSignInAuthentication? googleAuth = await googleUser
+          ?.authentication;
 
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken,
@@ -77,22 +82,33 @@ class Auth extends BaseController{
       final credentialg = await _auth.signInWithCredential(credential);
       firebaseUser.value = credentialg.user;
       return 'Success';
-    }on Exception catch(e){
+    } on Exception catch (e) {
       return e.toString();
     }
   }
 
-  Future<bool> signInCredential(AuthCredential credential)async{
-    try{
+  Future<bool> signInCredential(AuthCredential credential) async {
+    try {
       final userCredential = await _auth.signInWithCredential(credential);
       firebaseUser.value = userCredential.user;
       return true;
-    }on FirebaseAuthException catch (e){
+    } on FirebaseAuthException catch (e) {
       return false;
-    } catch (e){
+    } catch (e) {
       return false;
     }
   }
 
+
+  Future<String?> forgotPassword(String email) async{
+    try{
+      await _auth.sendPasswordResetEmail(email: email);
+      return 'Success';
+    } on FirebaseAuthException catch (e){
+      return 'Login Failed';
+    } catch (e){
+      return 'Login Failed';
+    }
+  }
 
 }

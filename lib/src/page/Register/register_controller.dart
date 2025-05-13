@@ -6,12 +6,14 @@ class RegisterController extends BaseController with GetSingleTickerProviderStat
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final usernameController = TextEditingController();
 
   void registerWithEmailandPassword() async{
     if(registerFormKey.currentState!.validate()){
       String email = emailController.text.trim();
       String password = passwordController.text.trim();
-      String? message = await Auth.to.registerUserEmailPassword(email,password);
+      String username = usernameController.text.trim();
+      String? message = await Auth.to.registerUserEmailPassword(email,password,username);
       if (message == null){
         Get.snackbar('error', '');
       } else if (message.contains('Success')){
@@ -21,6 +23,10 @@ class RegisterController extends BaseController with GetSingleTickerProviderStat
         Get.snackbar('', message);
       }
     }
+  }
+
+  void onTapSignIn() async{
+    Get.offAllNamed('/login');
   }
 
   FormFieldValidator<String?> get emailValidator {

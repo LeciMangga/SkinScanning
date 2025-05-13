@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       initialRoute: '/',
       getPages: AppPages.routes,
-      title: 'Flutter Demo',
+      title: 'Skin Scanning',
       theme: ThemeData.light(),
       home: const StartupView(),
     );

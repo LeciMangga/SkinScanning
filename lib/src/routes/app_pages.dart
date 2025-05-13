@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
 import 'package:skinscanning/src/bindings/base_builder_binding.dart';
+import 'package:skinscanning/src/bindings/forgot_password_binding.dart';
 import 'package:skinscanning/src/bindings/index.dart';
 import 'package:skinscanning/src/bindings/base_builder_binding.dart';
+import 'package:skinscanning/src/page/ForgotPassword/forgot_password_view.dart';
 import 'package:skinscanning/src/page/ScanUrSkin/ScanUrSkin_view.dart';
 import 'package:skinscanning/src/page/Template/base_Builder.dart';
 import 'package:skinscanning/src/startup/startup_view.dart';
@@ -22,10 +24,6 @@ abstract class AppPages {
       binding: BaseBuilderBinding(),
     ),
     GetPage(
-      name: '/landing',
-      page: () => LandingView(),
-    ),
-    GetPage(
       name: '/login',
       page: () => LoginView(),
       binding: LoginBinding(),
@@ -36,8 +34,9 @@ abstract class AppPages {
       binding: RegisterBinding(),
     ),
     GetPage(
-      name: '/scanurskin',
-      page: () => ScanurskinView(),
-    )
+      name: '/forgot',
+      page: () => ForgotPasswordView(),
+      binding: ForgotPasswordBinding(),
+    ),
   ];
 }

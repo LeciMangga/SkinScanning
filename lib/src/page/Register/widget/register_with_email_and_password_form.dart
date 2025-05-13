@@ -34,6 +34,30 @@ class registerEmailPassword extends StatelessWidget {
             SizedBox(height: 40),
             TextFormField(
               controller: controller.passwordController,
+              textInputAction: TextInputAction.next,
+              enableSuggestions: true,
+              autocorrect: true,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                hintText: 'Enter your Username',
+                labelText: 'Username',
+                hintStyle: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 13,
+                  color: Color(0x909090FF),
+                ),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Username required';
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 40,),
+            TextFormField(
+              controller: controller.passwordController,
               textInputAction: TextInputAction.done,
               obscureText: true,
               enableSuggestions: false,
