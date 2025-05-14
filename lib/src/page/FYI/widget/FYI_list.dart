@@ -1,5 +1,6 @@
 import 'package:skinscanning/src/core/base_import.dart';
 import '../FYI_controller.dart';
+import '../FYI_detail_view.dart';
 import 'FYI_card.dart';
 
 class FYIList extends StatelessWidget {
@@ -7,14 +8,13 @@ class FYIList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Get an instance of your FyiController
     final FyiController fyiController = Get.find<FyiController>();
 
     return Obx(() {
       // Use Obx to listen for changes in the fyiItems list
       if (fyiController.isLoading) {
         // Show a loading indicator while data is being fetched
-        return const Center(child: CircularProgressIndicator()); // Or any other loading widget
+        return const Center(child: CircularProgressIndicator());
       } else if (fyiController.errorMessage.isNotEmpty) {
         // Show an error message if there's an error
         return Center(child: Text('Error: ${fyiController.errorMessage.value}'));
@@ -31,11 +31,9 @@ class FYIList extends StatelessWidget {
             return FYICard(
               title: item.title ?? '', // Use null-aware operator in case of null values
               imageUrl: item.imageUrl ??
-                  '', //  Use null-aware operator in case of null values
+                  '',
               onTap: () {
-                // Handle the tap event, e.g., navigate to a detail view
-                // You can pass the item to the detail view if needed
-                // Get.to(() => FYI_DetailView(fyiItem: item)); // Example
+                Get.to(() => FYIDetailView(fyiItem: item));
               },
             );
           },

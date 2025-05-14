@@ -23,7 +23,7 @@ class NewsDetailView extends StatelessWidget {
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
               final baseController = Get.find<BaseBuilderController>();
-              baseController.onTapNavBar(3); // Go back to NewsView
+              baseController.onTapNavBar(3);
             },
           ),
         ),

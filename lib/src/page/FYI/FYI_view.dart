@@ -30,7 +30,7 @@ class _FyiViewState extends State<FyiView> {
       onTap: () => controller.onTapGestureDetector(context),
       child: Column(
         children: const [
-          Expanded(child: FYIList()), // 💡 This makes the list scrollable
+          Expanded(child: FYIList()),
         ],
       ),
     );

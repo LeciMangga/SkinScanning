@@ -28,7 +28,6 @@ class NewsService extends GetxService {
     }
   }
 
-  // Real-time stream of news articles (optional)
   Stream<List<NewsModel>> getNewsStream(List<String> selectedTags) {
     Query<Map<String, dynamic>> query = _firestore.collection(_collectionName).orderBy('timestamp', descending: true);
 
