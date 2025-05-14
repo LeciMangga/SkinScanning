@@ -3,6 +3,8 @@ import 'package:skinscanning/src/page/Template/base_Builder_controller.dart';
 import 'package:skinscanning/src/page/News/models/newsService.dart';
 import 'package:skinscanning/src/page/News/models/news_model.dart';
 
+import 'news_detail_view.dart';
+
 class NewsController extends BaseController with GetSingleTickerProviderStateMixin {
   late FocusNode focusNode;
   final List<String> availableTags = ['Skin Cancer', 'Acne', 'Skincare'];
@@ -12,6 +14,11 @@ class NewsController extends BaseController with GetSingleTickerProviderStateMix
 
   void onTapGestureDetector(BuildContext context) {
     FocusScope.of(context).unfocus();
+  }
+
+  void openNewsDetail(NewsModel news) {
+    final baseController = Get.find<BaseBuilderController>();
+    baseController.builded.value = NewsDetailView(news: news);
   }
 
   void updateSelectedTags(List<String> tags) {
@@ -42,10 +49,10 @@ class NewsController extends BaseController with GetSingleTickerProviderStateMix
   }
 
   Future<void> fetchNews() async {
-    print("fetchNews called with selectedTags: ${selectedTags.value}"); // Debugging
+    print("fetchNews called with selectedTags: ${selectedTags.value}");
     try {
-      List<NewsModel> fetchedNews = await _newsService.getNews(selectedTags.value); // Pass the value
-      print("fetchNews: Fetched ${fetchedNews.length} news items"); // Debugging
+      List<NewsModel> fetchedNews = await _newsService.getNews(selectedTags.value);
+      print("fetchNews: Fetched ${fetchedNews.length} news items");
       newsItems.assignAll(fetchedNews); // Use assignAll
     } catch (e) {
       print("Error fetching news: $e");

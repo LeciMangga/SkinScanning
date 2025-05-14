@@ -5,14 +5,13 @@ import 'package:skinscanning/src/page/News/models/news_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NewsList extends StatelessWidget {
-  const NewsList({Key? key}) : super(key: key);
+  const NewsList({super.key});
 
   @override
   Widget build(BuildContext context) {
     final NewsController controller = Get.find<NewsController>();
 
     return Obx(() => Column(
-      // Wrap with Obx for reactive updates
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
@@ -24,34 +23,28 @@ class NewsList extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: controller.isLoading // Use isLoading from controller
+          child: controller.isLoading
               ? const Center(
-              child: CircularProgressIndicator()) // Show loading indicator
+              child: CircularProgressIndicator())
               : Column(
             children:
             List.generate(controller.newsItems.length, (index) {
               final NewsModel item =
-              controller.newsItems[index]; // Get NewsModel
+              controller.newsItems[index];
               return NewsCard(
-                imageUrl: item.imageUrl, // Use fields from NewsModel
+                imageUrl: item.imageUrl,
                 title: item.title,
                 author: item.author,
                 tag: item.tag,
                 time: item.timestamp != null
-                    ? (item.timestamp as Timestamp)
-                    .toDate()
+                    ? TimeAgo((item.timestamp as Timestamp)
+                    .toDate())
                     .timeAgo()
                     : "N/A",
-                // Format timestamp
                 isLoading:
-                false, //  NewsCard doesn't need controller.isLoading
+                false,
                 onTap: () {
-                  Get.snackbar(
-                    "'${item.tag}'",
-                    "Opening '${item.title}'",
-                    snackPosition: SnackPosition.BOTTOM,
-                    margin: const EdgeInsets.only(bottom: 80),
-                  );
+                  controller.openNewsDetail(item);
                 },
               );
             }),

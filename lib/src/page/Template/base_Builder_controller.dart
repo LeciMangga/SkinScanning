@@ -2,9 +2,13 @@ import 'package:skinscanning/src/core/base_import.dart';
 import 'package:skinscanning/src/page/Forum/forum_controller.dart';
 import 'package:skinscanning/src/page/Forum/forum_view.dart';
 import 'package:skinscanning/src/page/Forum/models/forum_service.dart';
+import 'package:skinscanning/src/page/FYI/FYI_view.dart';
 import 'package:skinscanning/src/page/Landing/landing_view.dart';
 import 'package:skinscanning/src/page/News/news_view.dart';
 import 'package:skinscanning/src/page/ScanUrSkin/ScanUrSkin_view.dart';
+
+import '../News/models/news_model.dart';
+import '../News/news_detail_view.dart';
 
 class BaseBuilderController  extends BaseController with GetSingleTickerProviderStateMixin{
 
@@ -50,11 +54,10 @@ class BaseBuilderController  extends BaseController with GetSingleTickerProvider
         builded.value = NewsView();
         break;
       case 4:
-        builded.value = Placeholder();
+        builded.value = FyiView();
         break;
     }
   }
-
 
   @override
   void onInit() {

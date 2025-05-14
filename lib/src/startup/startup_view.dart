@@ -64,7 +64,7 @@ class _StartupViewState extends State<StartupView> {
                     child: SizedBox(
                       width: Get.width,
                       child: Text(
-                        'Skin Scanning 2025',
+                        'Skin Scanning 2025\nPowered by Google',
                         style: TextStyle(
                           color: Color(0xFF767676),
                           fontWeight: FontWeight.w800

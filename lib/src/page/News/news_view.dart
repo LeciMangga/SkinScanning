@@ -21,7 +21,7 @@ class _NewsViewState extends State<NewsView> {
 
   @override
   void dispose() {
-    Get.delete<NewsController>(); // Proper cleanup if needed
+    Get.delete<NewsController>();
     super.dispose();
   }
 

@@ -3,7 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NewsModel {
-  final String? id; // Firestore document ID
+  final String? id;
   final String? imageUrl;
   final String? title;
   final String? author;
@@ -42,7 +42,7 @@ class NewsModel {
       'title': title,
       'author': author,
       'tag': tag,
-      'timestamp': timestamp ?? Timestamp.now(), // Use current timestamp if not provided
+      'timestamp': timestamp ?? Timestamp.now(),
       'content': content,
     };
   }
