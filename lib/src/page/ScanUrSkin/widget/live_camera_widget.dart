@@ -1,6 +1,4 @@
-import 'dart:io';
 import 'package:camera/camera.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:skinscanning/src/core/base_import.dart';
 import 'package:skinscanning/src/page/ScanUrSkin/ScanUrSkin_controller.dart';
 

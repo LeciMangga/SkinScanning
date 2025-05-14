@@ -25,7 +25,7 @@ class ScanHistoryCard extends StatelessWidget {
         children: [
           Expanded(
             child: Text(
-              '${DateFormat('dd-MM-yyyy').format(scanHistoryModel.dateUploaded.toDate())}\n${scanHistoryModel.diseasesName!}',
+              '${DateFormat('dd-MM-yyyy').format(scanHistoryModel.dateUploaded.toDate())}\n${scanHistoryModel.diseasesName}',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w400,
@@ -86,7 +86,7 @@ class ScanHistoryCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(12), // Increased border radius
             child: scanHistoryModel.imagePath.isNotEmpty
                 ? Image.network(
-              scanHistoryModel.imagePath!,
+              scanHistoryModel.imagePath,
               width: 100,
               height: 100,
               fit: BoxFit.cover,

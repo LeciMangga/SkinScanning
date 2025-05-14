@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:skinscanning/src/core/base_import.dart';
 
 class ScanHistoryModel{
   final Timestamp dateUploaded;

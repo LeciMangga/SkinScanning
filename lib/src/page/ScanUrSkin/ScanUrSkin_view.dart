@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:skinscanning/src/core/base_import.dart';
 import 'package:skinscanning/src/page/ScanUrSkin/ScanUrSkin_controller.dart';
 import 'package:skinscanning/src/page/ScanUrSkin/widget/live_camera_widget.dart';
