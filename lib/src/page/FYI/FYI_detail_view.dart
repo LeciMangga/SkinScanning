@@ -41,7 +41,7 @@ class _FYIDetailViewState extends State<FYIDetailView> {
       final details = await _geminiService.generateDiseaseDetails(widget.fyiItem.title ?? '');
 
       // Always save/update to Firestore
-      await docRef.set({
+      await docRef.update({
         'title': widget.fyiItem.title,
         'imageUrl': widget.fyiItem.imageUrl,
         'description': details['description'],
