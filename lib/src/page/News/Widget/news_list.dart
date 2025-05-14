@@ -21,6 +21,8 @@ class NewsList extends StatelessWidget {
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
         ),
+        controller.newsFetchLoading.value ?
+        Center(child: CircularProgressIndicator(),) :
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: controller.isLoading

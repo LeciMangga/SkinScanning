@@ -12,6 +12,8 @@ class NewsController extends BaseController with GetSingleTickerProviderStateMix
   RxList<NewsModel> newsItems = <NewsModel>[].obs;
   late final NewsService _newsService;
 
+  RxBool newsFetchLoading = true.obs;
+
   void onTapGestureDetector(BuildContext context) {
     FocusScope.of(context).unfocus();
   }
@@ -49,6 +51,8 @@ class NewsController extends BaseController with GetSingleTickerProviderStateMix
   }
 
   Future<void> fetchNews() async {
+    newsFetchLoading.value = true;
+    print("fetchNews called with selectedTags: ${selectedTags.value}"); // Debugging
     print("fetchNews called with selectedTags: ${selectedTags.value}");
     try {
       List<NewsModel> fetchedNews = await _newsService.getNews(selectedTags.value);
@@ -58,6 +62,7 @@ class NewsController extends BaseController with GetSingleTickerProviderStateMix
       print("Error fetching news: $e");
       Get.snackbar('Error', 'Failed to load news: $e');
     }
+    newsFetchLoading.value = false;
   }
 }
 

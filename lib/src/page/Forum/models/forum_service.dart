@@ -1,8 +1,6 @@
 import 'package:skinscanning/src/core/base_import.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:skinscanning/src/page/Forum/forum_controller.dart';
 import 'package:skinscanning/src/page/Forum/models/forum_model.dart';
-import 'package:skinscanning/src/utils/auth_utils.dart';
 
 class ForumService extends GetxService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

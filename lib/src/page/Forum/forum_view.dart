@@ -32,13 +32,15 @@ class _ForumViewState extends State<ForumView> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<ForumController>();
-    return GestureDetector(
-          onTap: () {
-            controller.onTapGestureDetector(context);
-          },
-          child: SingleChildScrollView(
-            child: ForumCardList(),
-          ),
-        );
+    return Obx(() => controller.forumFetchLoading.value ?
+    Center(child: CircularProgressIndicator(),) :
+    GestureDetector(
+      onTap: () {
+        controller.onTapGestureDetector(context);
+        },
+      child: SingleChildScrollView(
+        child: ForumCardList(),
+      ),
+    ));
   }
 }

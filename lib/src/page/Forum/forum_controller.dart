@@ -6,6 +6,7 @@ import 'package:skinscanning/src/page/Forum/models/forum_service.dart';
 class ForumController extends BaseController with GetSingleTickerProviderStateMixin{
 
   RxInt forumFetchLimit = 5.obs;
+  RxBool forumFetchLoading = true.obs;
 
   late FocusNode focusNode;
 
@@ -18,7 +19,7 @@ class ForumController extends BaseController with GetSingleTickerProviderStateMi
   }
 
   Future<void> fetchForum() async{
-    isLoading = true;
+    forumFetchLoading.value = true;
     try{
       List<ForumModel> fetchedForum = await forumService.fetchForumsfromFirebase(forumFetchLimit.value);
       print("fetchNews: Fetched ${fetchedForum.length} news items");
@@ -26,11 +27,11 @@ class ForumController extends BaseController with GetSingleTickerProviderStateMi
     } catch (e){
       print("Error fetching forum: $e");
     }
-    isLoading = false;
+    forumFetchLoading.value = false;
   }
 
   @override
-  void onInit() {
+  void onInit(){
     super.onInit();
     focusNode = FocusNode();
     forumService = Get.put(ForumService());
