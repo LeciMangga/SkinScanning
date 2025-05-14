@@ -25,8 +25,8 @@ class GeminiService {
 
   Future<Map<String, String>> generateDiseaseDetails(String diseaseName) async {
     final descriptionPrompt = 'Provide a concise description of $diseaseName.';
-    final symptomsPrompt = 'List the common symptoms of $diseaseName.';
-    final treatmentPrompt = 'Describe the typical treatments for $diseaseName.';
+    final symptomsPrompt = 'List the key common symptoms of $diseaseName in a brief, point-by-point manner.';
+    final treatmentPrompt = 'Describe the typical and most effective treatments for $diseaseName concisely.';
 
     final results = await Future.wait([
       generateText(descriptionPrompt),
