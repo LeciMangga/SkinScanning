@@ -6,6 +6,9 @@ import 'package:get/get.dart';
 import 'package:skinscanning/src/core/base_import.dart';
 import 'package:skinscanning/src/page/FYI/FYI_controller.dart';
 import 'package:skinscanning/src/page/FYI/models/FYI_model.dart';
+import 'package:skinscanning/src/page/Template/base_Builder_controller.dart';
+
+import 'FYI_view.dart';
 
 
 class FYIDetailView extends StatefulWidget {
@@ -26,16 +29,8 @@ class _FYIDetailViewState extends State<FYIDetailView> {
   void initState() {
     super.initState();
     _controller = Get.find<FyiController>();
+    _controller.fetchDiseaseDetailsForItem(widget.fyiItem);
 
-    // Fetch details for the current item when the view is initialized.
-    // Using addPostFrameCallback to ensure the controller method is called
-    // after the first frame is built, which is safer for state updates.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Check if details for this specific item are already loaded or being loaded
-      // to avoid redundant calls if user navigates back and forth quickly.
-      // The controller's fetchDiseaseDetailsForItem now has logic to decide if API call is needed.
-      _controller.fetchDiseaseDetailsForItem(widget.fyiItem);
-    });
   }
 
   @override
@@ -49,9 +44,8 @@ class _FYIDetailViewState extends State<FYIDetailView> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            // Optionally clear details in controller if they shouldn't persist when going back to list
-            // _controller.clearDetails();
-            Get.back();
+            final baseBuilderController = Get.find<BaseBuilderController>();
+            baseBuilderController.builded.value = FyiView(key: ValueKey("FyiView"));
           },
         ),
       ),

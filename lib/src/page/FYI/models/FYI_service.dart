@@ -2,7 +2,7 @@
 // (Or lib/app/data/services/fyi_service.dart - adjust imports in controller if changed)
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:skinscanning/src/utils/gemini_service.dart'; // Corrected path
+import 'package:skinscanning/src/utils/gemini_service.dart';
 import 'FYI_model.dart';
 
 class FyiService {

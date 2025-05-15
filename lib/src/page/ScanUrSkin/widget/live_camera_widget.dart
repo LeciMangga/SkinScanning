@@ -21,7 +21,7 @@ class _LiveCameraWidgetState extends State<LiveCameraWidget> {
 
   @override
   void dispose() {
-    controller.controllerCam?.dispose();
+    controller.controllerCam.value?.dispose();
     super.dispose();
   }
 
@@ -39,7 +39,7 @@ class _LiveCameraWidgetState extends State<LiveCameraWidget> {
           child: controller.isCameraInit.value ?
               ClipRRect(
                 borderRadius: BorderRadius.circular(16),
-                child: CameraPreview(controller.controllerCam!),
+                child: CameraPreview(controller.controllerCam.value!),
               ) :
               Center(child: CircularProgressIndicator(),)
           ,

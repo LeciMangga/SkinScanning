@@ -75,8 +75,7 @@ class FYIList extends StatelessWidget {
               // The FYICard should then handle an empty string (e.g. show placeholder).
               imageUrl: item.imageUrl ?? '',
               onTap: () {
-                // Navigate to the detail view, passing the selected fyiItem
-                Get.to(() => FYIDetailView(fyiItem: item));
+                fyiController.openFYIDetails(item);
               },
             );
           },

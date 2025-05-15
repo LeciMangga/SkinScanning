@@ -1,14 +1,12 @@
-import 'package:get_storage/get_storage.dart';
-import 'package:skinscanning/src/page/Forum/forum_controller.dart';
 import 'package:skinscanning/src/core/base_import.dart';
 import 'package:skinscanning/src/page/Forum/models/forum_service.dart';
-import 'package:skinscanning/src/utils/auth_utils.dart';
 
 class ForumModel {
   final String id;
   final String title;
   final String author;
   final String description;
+  final String content;
   RxInt upvote;
   RxInt downvote;
   int points;
@@ -22,6 +20,7 @@ class ForumModel {
     required this.title,
     required this.author,
     required this.description,
+    required this.content,
     required this.upvote,
     required this.downvote,
     required this.points,
@@ -37,6 +36,7 @@ class ForumModel {
       title: mappedForum['title'] ?? '',
       author: mappedForum['author'] ?? '',
       description: mappedForum['description'] ?? '',
+      content: mappedForum['content'],
       upvote: RxInt(mappedForum['upvote'] ?? 0),
       downvote: RxInt(mappedForum['downvote'] ?? 0),
       points: mappedForum['points'] ?? 0,
@@ -52,6 +52,7 @@ class ForumModel {
       'title': title,
       'author': author,
       'description': description,
+      'content': content,
       'upvote': upvote,
       'downvote': downvote,
       'points' : points,
@@ -70,6 +71,11 @@ class ForumModel {
               .currentUser!
               .uid
               .toString(),
+          Auth.to
+              .GetFireBaseAuth()
+              .currentUser!
+              .displayName
+              .toString(),
           id,
           upvote.value,
           downvote.value,
@@ -84,6 +90,11 @@ class ForumModel {
               .GetFireBaseAuth()
               .currentUser!
               .uid
+              .toString(),
+          Auth.to
+              .GetFireBaseAuth()
+              .currentUser!
+              .displayName
               .toString(),
           id,
           upvote.value,
@@ -105,6 +116,11 @@ class ForumModel {
               .currentUser!
               .uid
               .toString(),
+          Auth.to
+              .GetFireBaseAuth()
+              .currentUser!
+              .displayName
+              .toString(),
           id,
           upvote.value,
           downvote.value,
@@ -119,6 +135,11 @@ class ForumModel {
               .GetFireBaseAuth()
               .currentUser!
               .uid
+              .toString(),
+          Auth.to
+              .GetFireBaseAuth()
+              .currentUser!
+              .displayName
               .toString(),
           id,
           upvote.value,

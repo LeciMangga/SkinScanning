@@ -17,9 +17,8 @@ class _ForumViewState extends State<ForumView> {
   @override
   void initState() {
     super.initState();
-    if (!Get.isRegistered<ForumController>()) {
-      Get.put(ForumController());
-    }
+    controller = Get.put(ForumController());
+
   }
 
   @override
@@ -31,16 +30,39 @@ class _ForumViewState extends State<ForumView> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<ForumController>();
-    return Obx(() => controller.forumFetchLoading.value ?
-    Center(child: CircularProgressIndicator(),) :
-    GestureDetector(
+    return Obx(() => GestureDetector(
       onTap: () {
         controller.onTapGestureDetector(context);
-        },
-      child: SingleChildScrollView(
-        child: ForumCardList(),
-      ),
-    ));
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Color(0xFFFBE0E0),
+                borderRadius: BorderRadius.circular(10)
+              ),
+              child: Text(
+                  'Discuss Forum',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 25
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            controller.forumFetchLoading.value ?
+            Center(child: CircularProgressIndicator(),) :
+            SingleChildScrollView(
+                child: ForumCardList(),
+            ),
+          ]
+        )
+      )
+    )
+    );
   }
 }

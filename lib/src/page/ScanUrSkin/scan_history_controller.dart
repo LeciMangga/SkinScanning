@@ -1,3 +1,4 @@
+import 'package:get_storage/get_storage.dart';
 import 'package:skinscanning/src/core/base_import.dart';
 import 'package:skinscanning/src/page/ScanUrSkin/models/scan_history_model.dart';
 import 'package:skinscanning/src/page/ScanUrSkin/models/scan_history_service.dart';
@@ -7,11 +8,20 @@ class ScanHistoryController extends BaseController with GetSingleTickerProviderS
   late FocusNode focusNode;
   RxBool historyFetchLoading = true.obs;
   late final ScanHistoryService scanHistoryService;
+  RxBool isSortedDsc = true.obs;
 
   RxList<ScanHistoryModel> scanHistoryModelList = <ScanHistoryModel>[].obs;
 
   void onTapGestureDetector(BuildContext context){
     FocusScope.of(context).unfocus();
+  }
+
+  void onTapSorting(){
+    if (isSortedDsc.value){
+      isSortedDsc.value = false;
+    } else{
+      isSortedDsc.value = true;
+    }
   }
 
   Future<void> fetchHistory() async{

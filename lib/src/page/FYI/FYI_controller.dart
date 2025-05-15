@@ -6,7 +6,9 @@ import 'package:get/get.dart'; // For GetX state management
 import 'package:skinscanning/src/page/FYI/models/FYI_model.dart';
 import 'package:skinscanning/src/page/FYI/models/FYI_service.dart';
 import 'package:skinscanning/src/page/Template/base_Builder_controller.dart'; // Assuming this is your base controller or navigation helper
-import 'package:skinscanning/src/page/ScanUrSkin/ScanUrSkin_view.dart'; // For navigation
+import 'package:skinscanning/src/page/ScanUrSkin/ScanUrSkin_view.dart';
+
+import 'FYI_detail_view.dart'; // For navigation
 
 
 class FyiController extends GetxController with GetSingleTickerProviderStateMixin { // Changed from BaseController if it's not GetxController
@@ -54,6 +56,12 @@ class FyiController extends GetxController with GetSingleTickerProviderStateMixi
     return dateTime1.year == date2.year &&
         dateTime1.month == date2.month &&
         dateTime1.day == date2.day;
+  }
+
+  void openFYIDetails(FyiModel item){
+    final baseBController = Get.find<BaseBuilderController>();
+    baseBController.builded.value = FYIDetailView(
+        key: ValueKey("FYIDetailView-${item.id}"), fyiItem: item);
   }
 
   Future<void> fetchFyiItems() async {

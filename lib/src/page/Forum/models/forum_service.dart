@@ -50,7 +50,7 @@ class ForumService extends GetxService {
     await _firestore.collection('forums').add(forum.toMap());
   }
 
-  Future<void> onTapUpvotewithUser(String userId, String id, int updatedUpvote, updatedDownvote, bool isUpvoted) async {
+  Future<void> onTapUpvotewithUser(String userId,String username, String id, int updatedUpvote, updatedDownvote, bool isUpvoted) async {
     final docRef = _firestore.collection('forums')
         .doc(id).collection('votes').doc(userId);
     try {
@@ -62,6 +62,7 @@ class ForumService extends GetxService {
           'points': updatedUpvote - updatedDownvote,
         });
         docRef.update({
+          'username': username,
           'isUpvoted': isUpvoted,
         });
       } else {
@@ -71,6 +72,7 @@ class ForumService extends GetxService {
           'points': updatedUpvote - updatedDownvote,
         });
         docRef.set({
+          'username': username,
           'isUpvoted': isUpvoted,
         });
       }
@@ -79,7 +81,7 @@ class ForumService extends GetxService {
     }
   }
 
-  Future<void> onTapDownvotewithUser(String userId, String id, int updatedUpvote, updatedDownvote, bool isDownvoted) async {
+  Future<void> onTapDownvotewithUser(String userId, String username, String id, int updatedUpvote, updatedDownvote, bool isDownvoted) async {
     final docRef = _firestore.collection('forums')
         .doc(id).collection('votes').doc(userId);
     try {
@@ -91,6 +93,7 @@ class ForumService extends GetxService {
           'points': updatedUpvote - updatedDownvote,
         });
         docRef.update({
+          'username': username,
           'isDownvoted': isDownvoted,
         });
       } else {
@@ -100,11 +103,45 @@ class ForumService extends GetxService {
           'points': updatedUpvote - updatedDownvote,
         });
         docRef.set({
+          'username': username,
           'isDownvoted': isDownvoted,
         });
       }
     } catch (e){
       Get.snackbar('Error', 'failed fetching');
     }
+  }
+
+  Future<void> postCommentToFirebase(String comment, ForumModel forumModel)async{
+    await _firestore.collection('forums')
+        .doc(forumModel.id)
+        .collection('comments')
+        .add({
+      'username': Auth.to.GetFireBaseAuth().currentUser!.displayName,
+      'comment': comment
+    });
+  }
+
+  Future<List<dynamic>> fetchAllComments(ForumModel forumModel) async{
+    Query<Map<String, dynamic>> docRef = await _firestore.collection('forums')
+        .doc(forumModel.id)
+        .collection('comments');
+    try{
+      QuerySnapshot<Map<String, dynamic>> snapshot = await docRef.get();
+      final commentList = [];
+      for (final doc in snapshot.docs){
+        final data = doc.data();
+        final mappedComment = {
+          'username': data['username'],
+          'comment': data['comment']
+        };
+        commentList.add(mappedComment);
+      }
+      return commentList;
+    } catch (e){
+      print("$e");
+      return [];
+    }
+
   }
 }

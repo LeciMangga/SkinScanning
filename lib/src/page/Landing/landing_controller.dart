@@ -16,7 +16,7 @@ class LandingController extends BaseController with GetSingleTickerProviderState
   void goToScanPage() {
     final controller = Get.find<BaseBuilderController>();
     controller.selectedIndex.value = 2;
-    controller.builded.value = ScanurskinView();
+    controller.builded.value = ScanurskinView(key: ValueKey("ScanurskinView"));
   }
 
   @override

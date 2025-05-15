@@ -30,12 +30,12 @@ class _ScanHistoryViewState extends State<ScanHistoryView> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return Obx(() => GestureDetector(
       onTap: () => controller.onTapGestureDetector(context),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 18, vertical: 20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,7 +51,9 @@ class _ScanHistoryViewState extends State<ScanHistoryView> {
                 Row(
                   children: [
                     ElevatedButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        controller.onTapSorting();
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFFF3F3F3),
                         shape: RoundedRectangleBorder(
@@ -73,36 +75,24 @@ class _ScanHistoryViewState extends State<ScanHistoryView> {
                       ),
                     ),
                     SizedBox(width: 12,),
-                    ElevatedButton(
-                      onPressed: (){},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFF3F3F3),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Filter',
-                            style: TextStyle(
-                              color: Color(0xFF808488),
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          Icon(Icons.filter_alt, color: Color(0xFF808488),)
-                        ],
-                      ),
-                    ),
                   ],
                 )
               ],
+            ),
+            Text(controller.isSortedDsc.value ?
+              'Newest to Oldest' :
+                'Oldest to Newest',
+              style: TextStyle(
+                color: Color(0xFF808488),
+                fontSize: 15
+              ),
+              textAlign: TextAlign.start,
             ),
             Expanded(child: SingleChildScrollView(child: ScanHistoryCardlist())),
           ],
         ),
       ),
+    )
     );
   }
 }

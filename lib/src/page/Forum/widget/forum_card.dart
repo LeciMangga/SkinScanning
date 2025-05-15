@@ -23,29 +23,34 @@ class ForumCard extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(forumModel.title, style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black
-                ),),
-                SizedBox(height: 1,),
-                Text('by : ${forumModel.author}', style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black
-                ),),
-                Text(forumModel.description,
-                  style: TextStyle(
-                    height: 1,
-                    color: Colors.grey,
+            child: GestureDetector(
+              onTap: (){
+                controller.onTapForumCard(forumModel);
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(forumModel.title, style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black
+                  ),),
+                  SizedBox(height: 1,),
+                  Text('by : ${forumModel.author}', style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
-                  ),
-                )
-              ],
+                    color: Colors.black
+                  ),),
+                  Text(forumModel.description,
+                    style: TextStyle(
+                      height: 1,
+                      color: Colors.grey,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
           Column(

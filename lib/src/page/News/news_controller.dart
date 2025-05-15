@@ -1,9 +1,12 @@
 import 'package:skinscanning/src/core/base_import.dart';
+import 'package:skinscanning/src/page/Landing/landing_view.dart';
+import 'package:skinscanning/src/page/News/news_view.dart';
 import 'package:skinscanning/src/page/Template/base_Builder_controller.dart';
 import 'package:skinscanning/src/page/News/models/newsService.dart';
 import 'package:skinscanning/src/page/News/models/news_model.dart';
 
 import 'news_detail_view.dart';
+
 
 class NewsController extends BaseController with GetSingleTickerProviderStateMixin {
   late FocusNode focusNode;
@@ -20,7 +23,8 @@ class NewsController extends BaseController with GetSingleTickerProviderStateMix
 
   void openNewsDetail(NewsModel news) {
     final baseController = Get.find<BaseBuilderController>();
-    baseController.builded.value = NewsDetailView(news: news);
+    baseController.builded.value = NewsDetailView(key: ValueKey("NewsDetailView-${news.id}"), news: news);
+    // baseController.builded.value = LandingView(key: ValueKey("LandingView"));
   }
 
   void updateSelectedTags(List<String> tags) {

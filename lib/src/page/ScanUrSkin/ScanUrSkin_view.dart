@@ -18,9 +18,9 @@ class _ScanurskinViewState extends State<ScanurskinView> {
   @override
   void initState() {
     super.initState();
-    if (!Get.isRegistered<ScanurskinController>()) {
-      controller = Get.put(ScanurskinController());
-    }
+    controller = Get.isRegistered<ScanurskinController>() ?
+        Get.find<ScanurskinController>() :
+        Get.put(ScanurskinController());
   }
 
   @override
@@ -45,6 +45,21 @@ class _ScanurskinViewState extends State<ScanurskinView> {
               Stack(
                 children: [
                   LiveCameraWidget(),
+                  Positioned(
+                      bottom: 75,
+                      right: 15,
+                      child: GestureDetector(
+                        onTap: controller.changeCamera,
+                        child: Container(
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle
+                          ),
+                          child: Icon(Icons.cameraswitch),
+                        ),
+                      )
+                  ),
                   Positioned(
                     bottom: 15,
                     right: 15,

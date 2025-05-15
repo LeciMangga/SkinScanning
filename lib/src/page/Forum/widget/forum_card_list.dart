@@ -15,15 +15,12 @@ class _ForumCardListState extends State<ForumCardList> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<ForumController>();
-    return Obx(() => Container(
-      padding: EdgeInsets.symmetric(horizontal: 28),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: List.generate(controller.forumList.length, (index){
-            return ForumCard(forumModel: controller.forumList[index],);
-          })
-        ),
-    ));
+    return Obx(() => Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: List.generate(controller.forumList.length, (index){
+          return ForumCard(forumModel: controller.forumList[index],);
+        })
+      ));
   }
 }
 

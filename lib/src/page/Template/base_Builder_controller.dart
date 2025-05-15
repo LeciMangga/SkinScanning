@@ -1,3 +1,5 @@
+
+import 'package:animations/animations.dart';
 import 'package:skinscanning/src/core/base_import.dart';
 import 'package:skinscanning/src/page/Forum/forum_controller.dart';
 import 'package:skinscanning/src/page/Forum/forum_view.dart';
@@ -36,25 +38,44 @@ class BaseBuilderController  extends BaseController with GetSingleTickerProvider
     'FYI',
   ];
 
-  Rx<Widget> builded = Rx<Widget>(LandingView());
+  Rx<Widget> builded = Rx<Widget>(LandingView(key: ValueKey("LandingView")));
+
+  PageTransitionSwitcher buildPageTransitionSwitcher() {
+    return PageTransitionSwitcher(
+      duration: const Duration(milliseconds: 500),
+      transitionBuilder: (child, animation, secondaryAnimation) =>
+          // FadeThroughTransition(
+          //   animation: animation,
+          //   secondaryAnimation: secondaryAnimation,
+          //   child: child,
+          // ),
+      SharedAxisTransition(
+        animation: animation,
+        secondaryAnimation: secondaryAnimation,
+        transitionType: SharedAxisTransitionType.horizontal, // Can be X, Y, or Z
+        child: child,
+      ),
+      child: builded.value,
+    );
+  }
 
   void onTapNavBar(int index){
     selectedIndex.value = index;
     switch (index){
       case 0:
-        builded.value = LandingView();
+        builded.value = LandingView(key: ValueKey("LandingView"));
         break;
       case 1:
-        builded.value = ForumView();
+        builded.value = ForumView(key: ValueKey("ForumView"));
         break;
       case 2:
-        builded.value = ScanurskinView();
+        builded.value = ScanurskinView(key: ValueKey("ScanurskinView"));
         break;
       case 3:
-        builded.value = NewsView();
+        builded.value = NewsView(key: ValueKey("NewsView"));
         break;
       case 4:
-        builded.value = FyiView();
+        builded.value = FyiView(key: ValueKey("FyiView"));
         break;
     }
   }
