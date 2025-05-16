@@ -55,14 +55,6 @@ class _FYIDetailViewState extends State<FYIDetailView> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Display the title from the controller's selected item or the initial widget item
-              Text(
-                _controller.selectedFyiItem.value?.title ?? widget.fyiItem.title ?? 'Unknown Disease',
-                style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 20),
-
               // Conditional UI based on loading and error states from the controller
               if (_controller.isLoadingDetails.value)
                 const Center(child: CircularProgressIndicator())

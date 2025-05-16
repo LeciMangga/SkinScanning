@@ -114,6 +114,89 @@ class _ForumContentViewState extends State<ForumContentView> {
             ]
         ),
       ),
+    return Obx(() => GestureDetector(
+        child: SingleChildScrollView(
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+            decoration: BoxDecoration(
+              color: Color(0xFFD6D6D6),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    controller.forumModel.value!.title,
+                    style: TextStyle(
+                      fontSize: 30
+                    ),
+                  ),
+                  Text(
+                    'by : ${controller.forumModel.value!.author}',
+                    style: TextStyle(
+                      fontSize: 20
+                    ),
+                  ),
+                  Text(
+                    '"${controller.forumModel.value!.description}"'
+                  ),
+                  SizedBox(height: 10,),
+                  Text(
+                    '"${controller.forumModel.value!.author}":\n${controller.forumModel.value!.content}'
+                  ),
+                  SizedBox(height: 30,),
+                  Form(
+                    key: controller.commentKey,
+                    child: TextFormField(
+                      controller: controller.commentController,
+                      minLines: 1,
+                      maxLines: 5,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.comment),
+                        suffixIcon: GestureDetector(
+                          onTap: controller.sendComment,
+                          child: controller.isSendingComment.value ? CircularProgressIndicator() : Icon(Icons.send),
+                        ),
+                        hintText: 'Comment Here',
+                        labelText: 'Comment',
+                        filled: true,
+                        fillColor: Colors.white,
+                        hintStyle: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 13,
+                          color: Color(0x909090FF),
+                        ),
+                      ),
+                      validator: controller.commentValidator,
+                    ),
+                  ),
+                  SizedBox(height: 20,),
+                  Column(
+                    children: List.generate(controller.commentList.length, (index){
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        padding: EdgeInsets.all(15),
+                        margin: EdgeInsets.symmetric(vertical: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(controller.commentList[index]['username'] ?? 'Unknown User', style: TextStyle(color: Colors.blueAccent),),
+                            Divider(),
+                            SizedBox(height: 5,),
+                            Text(controller.commentList[index]['comment'] ?? 'No Comment', style: TextStyle(color: Colors.black),)
+                          ],
+                        ),
+                      );
+                    }),
+                  ),
+                ]
+            ),
+          ),
+        )
     )
     );;
   }
