@@ -29,6 +29,7 @@ class ForumController extends BaseController with GetSingleTickerProviderStateMi
     };
   }
 
+
   Future<void> sendComment()async{
     isSendingComment.value = true;
     if (commentKey.currentState!.validate()){

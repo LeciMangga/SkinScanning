@@ -36,6 +36,11 @@ class ScanHistoryController extends BaseController with GetSingleTickerProviderS
     historyFetchLoading.value = false;
   }
 
+  Future<void> removeHistory(ScanHistoryModel scanHistoryModel) async{
+    scanHistoryService.removeFromHistory(scanHistoryModel);
+    fetchHistory();
+  }
+
   @override
   Future<void> onInit() async{
     super.onInit();

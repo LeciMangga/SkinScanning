@@ -3,6 +3,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:skinscanning/src/core/base_import.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:skinscanning/src/page/ScanUrSkin/models/scan_history_service.dart';
 import 'package:skinscanning/src/page/ScanUrSkin/scan_history_view.dart';
 import 'package:skinscanning/src/page/Template/base_Builder_controller.dart';
 import 'package:image/image.dart' as img;
@@ -15,12 +16,15 @@ class ScanurskinController extends BaseController with GetSingleTickerProviderSt
   XFile? image;
   DateTime? lastSendTime;
 
+  late final ScanHistoryService scanHistoryService;
+
 
   Rx<CameraController?> controllerCam = Rx<CameraController?>(null);
   RxInt camIndex = 0.obs;
   late List<CameraDescription>? cameras;
   RxBool isCameraInit = false.obs;
 
+  Uint8List? jpegBytes;
 
   Future<void> initCamera() async{
     await Permission.camera.request();
@@ -66,15 +70,24 @@ class ScanurskinController extends BaseController with GetSingleTickerProviderSt
     }
   }
 
+
+  Future<void> onTapSave()async{
+    if (jpegBytes != null){
+      await scanHistoryService.saveScanHistory(jpegBytes!);
+    } else {
+      print("JPEG is null. Make sure an image has been captured.");
+    }
+    onTapHistory();
+  }
+
   void processCameraImage(CameraImage image) {
     final now = DateTime.now();
-    print('processing image stream');
 
     if (lastSendTime == null || now.difference(lastSendTime!).inMilliseconds > 500) {
       lastSendTime = now;
 
-      final jpegBytes = convertYUV420ToJPEG(image);
-      print("image = ${jpegBytes.length} uint8");
+      jpegBytes = convertYUV420ToJPEG(image);
+      print("image = ${jpegBytes?.length} uint8");
     }
   }
 
@@ -151,6 +164,7 @@ class ScanurskinController extends BaseController with GetSingleTickerProviderSt
   Future<void> onInit() async{
     super.onInit();
     focusNode = FocusNode();
+    scanHistoryService = Get.put(ScanHistoryService());
     await requestCameraPermission();
     await initCamera();
   }

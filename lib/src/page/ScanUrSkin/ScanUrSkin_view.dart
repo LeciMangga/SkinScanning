@@ -109,7 +109,9 @@ class _ScanurskinViewState extends State<ScanurskinView> {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          controller.onTapSave();
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           shape: RoundedRectangleBorder(

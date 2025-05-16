@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:skinscanning/src/core/base_import.dart';
 import 'package:skinscanning/src/page/ScanUrSkin/models/scan_history_model.dart';
 import 'package:intl/intl.dart';
+import 'package:skinscanning/src/page/ScanUrSkin/scan_history_controller.dart';
 
 class ScanHistoryCard extends StatelessWidget {
   final ScanHistoryModel scanHistoryModel;
@@ -12,6 +15,7 @@ class ScanHistoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<ScanHistoryController>();
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
@@ -36,7 +40,8 @@ class ScanHistoryCard extends StatelessWidget {
           Column(
             children: [
               ElevatedButton(
-                onPressed: (){},
+                onPressed: (){
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFFD6D6D6),
                   minimumSize: const Size(70,30),
@@ -58,7 +63,9 @@ class ScanHistoryCard extends StatelessWidget {
                 )
               ),
               ElevatedButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    controller.removeHistory(scanHistoryModel);
+                  },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFFE34949),
                       minimumSize: const Size(70,30),
@@ -84,9 +91,9 @@ class ScanHistoryCard extends StatelessWidget {
           ),
           ClipRRect(
             borderRadius: BorderRadius.circular(12), // Increased border radius
-            child: scanHistoryModel.imagePath.isNotEmpty
-                ? Image.network(
-              scanHistoryModel.imagePath,
+            child: scanHistoryModel.base64image.isNotEmpty
+                ? Image.memory(
+              base64Decode(scanHistoryModel.base64image),
               width: 100,
               height: 100,
               fit: BoxFit.cover,

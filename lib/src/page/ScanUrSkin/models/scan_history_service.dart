@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:skinscanning/src/core/base_import.dart';
 import 'package:skinscanning/src/page/ScanUrSkin/models/scan_history_model.dart';
@@ -26,6 +28,53 @@ class ScanHistoryService extends GetxService {
     } catch (e) {
       print('Error fetching scan history: $e');
       return [];
+    }
+  }
+
+  Future<void> saveScanHistory(Uint8List jpegbytes) async{
+    try{
+      final userId = Auth.to.GetFireBaseAuth().currentUser!.uid;
+      final userDoc = _firestore.collection('scanHistory')
+          .doc(userId);
+      final jpegBase64 = base64Encode(jpegbytes);
+      final newHistory = {
+        "dateUploaded": Timestamp.now(),
+        "diseasesName": "Unknown",
+        "jpegBytes": jpegBase64,
+      };
+      final snapshot = await userDoc.get();
+      if (snapshot.exists) {
+        await userDoc.update({
+          "history": FieldValue.arrayUnion([newHistory])
+        });
+      } else {
+        await userDoc.set({
+          "history": [newHistory]
+        });
+      }
+    } catch (e){
+      print(e);
+    }
+  }
+
+  Future<void> removeFromHistory(ScanHistoryModel scanHistorytoRemove) async{
+    try{
+      final userId = Auth.to.GetFireBaseAuth().currentUser!.uid;
+      final userDoc = _firestore.collection('scanHistory').doc(userId);
+
+      final mapHistorytoRemove = {
+        "dateUploaded": scanHistorytoRemove.dateUploaded,
+        "diseasesName": scanHistorytoRemove.diseasesName,
+        "jpegBytes": scanHistorytoRemove.base64image
+      };
+
+      await userDoc.update({
+        "history": FieldValue.arrayRemove([mapHistorytoRemove])
+      });
+
+      print("Scan History item removed succesfully");
+    } catch (e){
+      print(e);
     }
   }
 

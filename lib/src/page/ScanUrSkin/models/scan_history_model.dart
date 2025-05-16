@@ -3,19 +3,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ScanHistoryModel{
   final Timestamp dateUploaded;
   final String diseasesName;
-  final String imagePath;
+  final String base64image;
 
   ScanHistoryModel({
     required this.dateUploaded,
     required this.diseasesName,
-    required this.imagePath
+    required this.base64image
   });
 
   factory ScanHistoryModel.fromMap(Map<String, dynamic> mappedHistory) {
     return ScanHistoryModel(
       dateUploaded: mappedHistory['dateUploaded'],
       diseasesName: mappedHistory['diseasesName'],
-      imagePath: mappedHistory['imagePath']
+      base64image: mappedHistory['jpegBytes']
     );
   }
 
@@ -23,7 +23,7 @@ class ScanHistoryModel{
     return {
       'dateUploaded': dateUploaded,
       'diseasesName': diseasesName,
-      'imagePath': imagePath
+      'jpegBytes': base64image
     };
   }
 

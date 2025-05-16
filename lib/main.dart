@@ -21,7 +21,10 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       getPages: AppPages.routes,
       title: 'Skin Scanning',
-      theme: ThemeData.light(),
+      theme: ThemeData(
+        fontFamily: 'Montserrat',
+        brightness: Brightness.light
+      ),
       home: const StartupView(),
     );
   }
