@@ -53,6 +53,17 @@ class NewsCard extends StatelessWidget {
                       ),
                     );
                   },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Container(
+                      width: 150,
+                      height: 150,
+                      color: Colors.grey[200],
+                      child: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
                 )
                     : Container(
                   width: 150, // Match increased image width

@@ -41,6 +41,7 @@ class ScanHistoryCard extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: (){
+                  controller.onTapDetailsDiseases(scanHistoryModel.diseasesName);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFFD6D6D6),

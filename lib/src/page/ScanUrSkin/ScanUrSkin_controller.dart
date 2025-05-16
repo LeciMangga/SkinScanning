@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:camera/camera.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:http/http.dart' as http;
 import 'package:skinscanning/src/core/base_import.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,8 +19,12 @@ class ScanurskinController extends BaseController with GetSingleTickerProviderSt
   XFile? image;
   DateTime? lastSendTime;
 
+  RxBool isLoadingDiseaseName = false.obs;
+
   late final ScanHistoryService scanHistoryService;
 
+  var diseaseName = Rxn<String>();
+  var diseaseScore = Rxn<String>();
 
   Rx<CameraController?> controllerCam = Rx<CameraController?>(null);
   RxInt camIndex = 0.obs;
@@ -25,6 +32,54 @@ class ScanurskinController extends BaseController with GetSingleTickerProviderSt
   RxBool isCameraInit = false.obs;
 
   Uint8List? jpegBytes;
+  Uint8List? imageDetectedbytes;
+
+  Future<void> onTapGetDiseaseName()async{
+    Future.delayed(Duration(milliseconds: 500));
+    getDiseaseName(jpegBytes!);
+  }
+
+  Future<void> getDiseaseName(Uint8List jpegBytes) async{
+    isLoadingDiseaseName.value = true;
+    try{
+      String base64image = base64Encode(jpegBytes);
+      final url = Uri.parse("https://skin-disease-predictor-1061602829360.us-central1.run.app/predict");
+
+      final response = await http.post(
+        url,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "instances": [
+            {
+              "image_bytes": base64image
+            }
+          ]
+        })
+      );
+      String? diseasename;
+      double? confidence_score;
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final prediction = data['predictions'][0];
+
+        diseasename = prediction['predicted_condition'];
+        confidence_score = prediction['confidence'];
+        print("Detected disease: $diseasename");
+      } else {
+        print("Failed to get disease. Status code: ${response.statusCode}");
+        print("Body: ${response.body}");
+      }
+      final score = confidence_score ?? 0;
+      diseaseName.value = score < 0.6 ? "Healthy"  :  "$diseasename" ?? "Unknown";
+      diseaseScore.value = (score*100).toStringAsFixed(2);
+      imageDetectedbytes = jpegBytes;
+      print(diseaseName.value);
+      print("confidence Score = ${score}");
+    } catch (e){
+      print("error getDiseaseName : $e");
+    }
+    isLoadingDiseaseName.value = false;
+  }
 
   Future<void> initCamera() async{
     await [
@@ -76,8 +131,8 @@ class ScanurskinController extends BaseController with GetSingleTickerProviderSt
 
 
   Future<void> onTapSave()async{
-    if (jpegBytes != null){
-      await scanHistoryService.saveScanHistory(jpegBytes!);
+    if (imageDetectedbytes != null){
+      await scanHistoryService.saveScanHistory(imageDetectedbytes!, diseaseName.value, diseaseScore.value);
     } else {
       print("JPEG is null. Make sure an image has been captured.");
     }
@@ -87,7 +142,7 @@ class ScanurskinController extends BaseController with GetSingleTickerProviderSt
   void processCameraImage(CameraImage image) {
     final now = DateTime.now();
 
-    if (lastSendTime == null || now.difference(lastSendTime!).inMilliseconds > 500) {
+    if (lastSendTime == null || now.difference(lastSendTime!).inMilliseconds > 1500) {
       lastSendTime = now;
 
       jpegBytes = convertYUV420ToJPEG(image);
@@ -171,7 +226,8 @@ class ScanurskinController extends BaseController with GetSingleTickerProviderSt
       image = pickedFile;
       Uint8List imageBytes = await pickedFile.readAsBytes();
       print('image converted to bytes : ${imageBytes}');
-      await scanHistoryService.saveScanHistory(imageBytes);
+      getDiseaseName(imageBytes);
+      await scanHistoryService.saveScanHistory(imageBytes, diseaseName.value, diseaseScore.value);
       onTapHistory();
     }
   }

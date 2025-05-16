@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       initialRoute: '/',
       getPages: AppPages.routes,
+      debugShowCheckedModeBanner : false,
       title: 'Skin Scanning',
       theme: ThemeData(
         fontFamily: 'Montserrat',

@@ -32,7 +32,7 @@ class _ScanurskinViewState extends State<ScanurskinView> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return Obx (() => GestureDetector(
       onTap: (){
         controller.onTapGestureDetector(context);
       },
@@ -77,31 +77,36 @@ class _ScanurskinViewState extends State<ScanurskinView> {
                   )
                 ],
               ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 25),
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(50),
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 1
+              GestureDetector(
+                onTap: controller.onTapGetDiseaseName,
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 25),
+                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(50),
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 1
+                    ),
+                    boxShadow: [
+                      const BoxShadow(
+                          color: Colors.black,
+                          blurRadius: 1,
+                          spreadRadius: 0
+                      ),
+                      const BoxShadow(
+                          color: Colors.white,
+                          blurRadius: 10,
+                          spreadRadius: 5
+                      ),
+                    ],
                   ),
-                  boxShadow: [
-                    const BoxShadow(
-                        color: Colors.black,
-                        blurRadius: 1,
-                        spreadRadius: 0
-                    ),
-                    const BoxShadow(
-                        color: Colors.white,
-                        blurRadius: 10,
-                        spreadRadius: 5
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Text('Info Penyakit...', style: TextStyle(color: Colors.grey, fontSize: 15),),
+                  child: Center(
+                    child: controller.isLoadingDiseaseName.value ?
+                    CircularProgressIndicator() :
+                    Text(controller.diseaseName.value==null ? "Tap to Detect" : "${controller.diseaseName.value} ${controller.diseaseScore.value}%" ?? "Tap to Detect", style: TextStyle(color: Colors.black, fontSize: 15),),
+                  ),
                 ),
               ),
               Row(
@@ -154,6 +159,6 @@ class _ScanurskinViewState extends State<ScanurskinView> {
           ),
         ),
       ),
-    );
+    ));
   }
 }

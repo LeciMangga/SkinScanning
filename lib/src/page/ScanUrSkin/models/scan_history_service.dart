@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:skinscanning/src/core/base_import.dart';
+import 'package:skinscanning/src/page/FYI/models/FYI_model.dart';
 import 'package:skinscanning/src/page/ScanUrSkin/models/scan_history_model.dart';
 
 class ScanHistoryService extends GetxService {
@@ -31,7 +32,7 @@ class ScanHistoryService extends GetxService {
     }
   }
 
-  Future<void> saveScanHistory(Uint8List jpegbytes) async{
+  Future<void> saveScanHistory(Uint8List jpegbytes, String? diseaseName, String? diseaseScore) async{
     try{
       final userId = Auth.to.GetFireBaseAuth().currentUser!.uid;
       final userDoc = _firestore.collection('scanHistory')
@@ -39,7 +40,7 @@ class ScanHistoryService extends GetxService {
       final jpegBase64 = base64Encode(jpegbytes);
       final newHistory = {
         "dateUploaded": Timestamp.now(),
-        "diseasesName": "Unknown",
+        "diseasesName": diseaseName ?? "Unknown",
         "jpegBytes": jpegBase64,
       };
       final snapshot = await userDoc.get();
@@ -76,6 +77,36 @@ class ScanHistoryService extends GetxService {
       print("Scan History item removed succesfully");
     } catch (e){
       print(e);
+    }
+  }
+
+  Future<FyiModel> addFyiItem(String diseaseName) async {
+    final fyiItem = FyiModel(title: diseaseName);
+    try {
+      final querySnapshot = await _firestore
+          .collection("diseases")
+          .where("title", isEqualTo: diseaseName)
+          .limit(1)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        // Disease already exists
+        final doc = querySnapshot.docs.first;
+        return FyiModel.fromSnapshot(doc);
+      } else {
+        final fyiItem = FyiModel(
+          title: diseaseName,
+          createdAt: Timestamp.now(),
+        );
+
+        Map<String, dynamic> data = fyiItem.toFirestore();
+
+        final docRef = await _firestore.collection("diseases").add(data);
+
+        return fyiItem.copyWith(id: docRef.id);
+      }
+    } catch (e) {
+      print('Error adding FYI item: $e');
+      rethrow;
     }
   }
 
