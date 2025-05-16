@@ -1,4 +1,5 @@
 import 'package:skinscanning/src/core/base_import.dart';
+import 'package:skinscanning/src/page/FYI/FYI_controller.dart';
 import 'package:skinscanning/src/page/Landing/widget/skin_info_card.dart';
 
 class SkinInfoList extends StatelessWidget {
@@ -6,18 +7,11 @@ class SkinInfoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> skinDiseases = [
-      'Acne',
-      'Eczema',
-      'Psoriasis',
-      'Rosacea',
-      'Melanoma',
-      'Vitiligo',
-      'Warts',
-      'Ringworm',
-    ];
 
-    return Column(
+
+    final controller = Get.find<FyiController>();
+
+    return Obx(()=> Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
@@ -31,19 +25,19 @@ class SkinInfoList extends StatelessWidget {
           height: 100,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: skinDiseases.length,
+            itemCount: controller.fyiItems.value.length,
             padding: const EdgeInsets.symmetric(horizontal: 15),
             itemBuilder: (context, index) {
               return SkinInfoCard(
-                title: skinDiseases[index],
+                title: controller.fyiItems.value[index].title!,
                 onTap: () {
-                  Get.snackbar("Info", "Open details for ${skinDiseases[index]}");
+                  controller.openFYIDetails(controller.fyiItems.value[index]);
                 },
               );
             },
           ),
         ),
       ],
-    );
+    ));
   }
 }

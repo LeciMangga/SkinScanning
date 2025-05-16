@@ -47,7 +47,7 @@ class FyiService {
       // Ensure createdAt is set, preferably server-side or as Timestamp.now() if not already.
       Map<String, dynamic> data = fyiItem.toFirestore();
       if (fyiItem.createdAt == null) {
-        data['createdAt'] = Timestamp.now(); // Or FieldValue.serverTimestamp()
+        data['createdAt'] = Timestamp.now();
       }
       if (fyiItem.detailsLastFetchedAt == null && (fyiItem.description !=null || fyiItem.symptoms != null || fyiItem.treatment !=null)) {
         data['detailsLastFetchedAt'] = Timestamp.now();

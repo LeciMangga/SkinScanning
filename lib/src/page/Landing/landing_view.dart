@@ -1,4 +1,5 @@
 import 'package:skinscanning/src/core/base_import.dart';
+import 'package:skinscanning/src/page/FYI/FYI_controller.dart';
 import 'package:skinscanning/src/page/Landing/landing_controller.dart';
 import 'package:skinscanning/src/page/Landing/widget/landing_news_list.dart';
 import 'package:skinscanning/src/page/Landing/widget/search_bar.dart';
@@ -16,16 +17,19 @@ class LandingView extends StatefulWidget {
 
 class _LandingViewState extends State<LandingView> {
   late NewsController controller;
+  late FyiController controllerFYI;
 
   @override
   void initState() {
     super.initState();
     controller = Get.put(NewsController());
+    controllerFYI = Get.put(FyiController());
   }
 
   @override
   void dispose() {
     Get.delete<NewsController>();
+    Get.delete<FyiController>();
     super.dispose();
   }
 

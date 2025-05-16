@@ -60,6 +60,7 @@ class FyiController extends GetxController with GetSingleTickerProviderStateMixi
 
   void openFYIDetails(FyiModel item){
     final baseBController = Get.find<BaseBuilderController>();
+    baseBController.selectedIndex.value = 4;
     baseBController.builded.value = FYIDetailView(
         key: ValueKey("FYIDetailView-${item.id}"), fyiItem: item);
   }

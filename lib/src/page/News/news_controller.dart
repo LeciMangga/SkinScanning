@@ -23,6 +23,7 @@ class NewsController extends BaseController with GetSingleTickerProviderStateMix
 
   void openNewsDetail(NewsModel news) {
     final baseController = Get.find<BaseBuilderController>();
+    baseController.selectedIndex.value = 3;
     baseController.builded.value = NewsDetailView(key: ValueKey("NewsDetailView-${news.id}"), news: news);
     // baseController.builded.value = LandingView(key: ValueKey("LandingView"));
   }

@@ -11,6 +11,14 @@ class BaseAppbar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: SvgPicture.asset('assets/images/Logo.svg'),
       centerTitle: true,
+      actions: [
+        IconButton(
+          onPressed: (){
+            Auth.to.GetFireBaseAuth().signOut();
+            Get.offAllNamed('/login');
+          },
+          icon: Icon(Icons.logout, color: Colors.red,))
+      ],
     );
   }
 }

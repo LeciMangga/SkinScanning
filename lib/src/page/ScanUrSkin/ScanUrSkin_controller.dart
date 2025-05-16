@@ -27,8 +27,11 @@ class ScanurskinController extends BaseController with GetSingleTickerProviderSt
   Uint8List? jpegBytes;
 
   Future<void> initCamera() async{
-    await Permission.camera.request();
-
+    await [
+      Permission.camera,
+      Permission.photos,
+      Permission.storage,
+    ].request();
     cameras = await availableCameras();
 
     controllerCam.value = CameraController(
@@ -63,6 +66,7 @@ class ScanurskinController extends BaseController with GetSingleTickerProviderSt
       await controllerCam.value?.initialize();
 
 
+      await initCamera();
 
       isCameraInit.value = true;
     } catch (e) {
@@ -87,8 +91,20 @@ class ScanurskinController extends BaseController with GetSingleTickerProviderSt
       lastSendTime = now;
 
       jpegBytes = convertYUV420ToJPEG(image);
-      print("image = ${jpegBytes?.length} uint8");
+      if (camIndex.value == 0) {
+        jpegBytes = rotateImage(jpegBytes!, 90);
+      } else if (camIndex.value == 1){
+        jpegBytes = rotateImage(jpegBytes!, -90);
+      }
     }
+  }
+
+  Uint8List rotateImage(Uint8List jpegBytes, int angle) {
+    final original = img.decodeImage(jpegBytes);
+    if (original == null) return jpegBytes;
+
+    final rotated = img.copyRotate(original, angle: angle);
+    return Uint8List.fromList(img.encodeJpg(rotated));
   }
 
   Uint8List convertYUV420ToJPEG(CameraImage cameraImage) {
@@ -151,8 +167,12 @@ class ScanurskinController extends BaseController with GetSingleTickerProviderSt
   Future<void> takePicture() async{
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null){
+      print('Picked image path: ${pickedFile.path}');
       image = pickedFile;
-      //update UI
+      Uint8List imageBytes = await pickedFile.readAsBytes();
+      print('image converted to bytes : ${imageBytes}');
+      await scanHistoryService.saveScanHistory(imageBytes);
+      onTapHistory();
     }
   }
 

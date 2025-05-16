@@ -33,7 +33,7 @@ class registerEmailPassword extends StatelessWidget {
             ),
             SizedBox(height: 40),
             TextFormField(
-              controller: controller.passwordController,
+              controller: controller.usernameController,
               textInputAction: TextInputAction.next,
               enableSuggestions: true,
               autocorrect: true,

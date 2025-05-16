@@ -52,8 +52,9 @@ class ScanHistoryService extends GetxService {
           "history": [newHistory]
         });
       }
+      print('success saving to firebase');
     } catch (e){
-      print(e);
+      print('Error saving to firebase $e');
     }
   }
 
